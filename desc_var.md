@@ -1,4 +1,4 @@
-idade_individuo: Idade do indivíduo que está solicitando o empréstimo.
+idade_individuo: Idade do indivíduo que está solicitando o empréstimo em anos.
 
 renda_anual_individuo: Renda anual do indivíduo.
 
@@ -7,11 +7,17 @@ tipo_posse_imovel: Tipo de posse de imóvel do indivíduo.
 * aluguel: O indivíduo está atualmente alugando uma propriedade
 * imovel_financiado: O indivíduo tem um financiamento sobre a propriedade que possui.
 * imovel_proprio: O indivíduo possui sua casa/apto integralmente.
-* imovel_proprio: Outras categorias de posse de imóvel que podem ser específicas ao conjunto de dados.
+* imovel_outros: Outras categorias de posse de imóvel que podem ser específicas ao conjunto de dados.
 
 tempo_emprego_anos': Tempo de emprego do indivíduo em anos.
 
 proposito_emprestimo: O propósito da solicitação do empréstimo.
+* fins_educacao               
+* fins_medicos                
+* fins_negocios               
+* fins_pessoais               
+* fins_consolidacao_debito    
+* fins_reformas       
 
 classificacao_emprestimo: A classificação atribuída ao empréstimo com base na credibilidade do tomador.
 * A: O tomador tem alta credibilidade, indicando baixo risco.
@@ -34,7 +40,7 @@ status_emprestimo: Status do empréstimo, onde 0 indica não inadimplente e 1 in
 percentual_renda_emprestimo: A porcentagem da renda representada pelo valor do empréstimo, arredondado.
 
 historico_inadimplencia: Histórico de inadimplência do indivíduo conforme registros do bureau de crédito.
-* historico_inadimplencia: O indivíduo tem um histórico de inadimplências no seu arquivo de crédito.
-* sem_historico_inadimplencia: O indivíduo não tem nenhum histórico de inadimplências.
+* S: O indivíduo tem um histórico de inadimplências no seu arquivo de crédito.
+* N: O indivíduo não tem nenhum histórico de inadimplências.
 
 duracao_historico_credito: A duração do histórico de crédito do indivíduo.

@@ -6,4 +6,4 @@ dict_vendas = {
 print(dict_vendas)
 
 df = pd.DataFrame(dict_vendas)
-print(df)
+print(df) #--
