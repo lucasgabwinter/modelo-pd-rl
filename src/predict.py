@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.load_artifacts import carregar_artefatos
+from .load_artifacts import carregar_artefatos
 
 
 ARTIFACTS = carregar_artefatos()
