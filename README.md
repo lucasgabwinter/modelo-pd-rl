@@ -1,106 +1,155 @@
-Modelo de Probabilidade de Default (PD) com Regressão Logística
+# Modelo de Probabilidade de Default (PD) com Regressão Logística
 
-Este projeto implementa um modelo de probabilidade de inadimplência (PD) utilizando regressão logística, com foco em organização de artefatos, reprodutibilidade e preparação para deploy em ambiente produtivo.
+Este projeto implementa um modelo de probabilidade de inadimplência (PD) utilizando regressão logística. A proposta foi estruturar um pipeline simples, mas bem organizado, separando claramente as etapas de treinamento e inferência, com foco em reprodutibilidade e preparação para deploy.
 
-Objetivo:
-Desenvolver um modelo de crédito com pipeline estruturado que permita:
+## Objetivo
 
-Treinamento consistente
-Separação clara de artefatos
-Reprodutibilidade das previsões
-Integração com serviços de inferência via API
-Implantação em ambiente cloud
-Estrutura do Projeto
+Desenvolver um modelo de crédito com uma estrutura que permita:
+
+- Treinar o modelo de forma consistente
+- Separar corretamente os artefatos gerados
+- Reproduzir as previsões fora do ambiente de treino
+- Disponibilizar o modelo via API
+- Preparar o projeto para execução em ambiente cloud
+
+## Estrutura do projeto
 modelo-pd-rl/
 │
-├── artifacts/              # Artefatos do modelo treinado
-│   ├── modelo_pd_rl.pkl
-│   ├── encoder_ohe.pkl
-│   ├── bins_woe.pkl
-│   ├── colunas_modelo.pkl
-│   └── metadata.pkl
+├── artifacts/ # Artefatos do modelo
+│ ├── modelo_pd_rl.pkl
+│ ├── encoder_ohe.pkl
+│ ├── bins_woe.pkl
+│ ├── colunas_modelo.pkl
+│ └── metadata.pkl
 │
-├── data/                   # Dataset utilizado
-│   └── credit_risk_dataset.csv
+├── data/ # Dataset utilizado
+│ └── credit_risk_dataset.csv
 │
-├── notebooks/              # Desenvolvimento e experimentação
-│   └── caderno.ipynb
+├── notebooks/ # Exploração e desenvolvimento
+│ └── caderno.ipynb
 │
-├── tests.py                # Testes de inferência do modelo
-├── requirements.txt        # Dependências do projeto
-├── desc_var.md             # Descrição das variáveis
-├── readme.md               # Documentação do projeto
-└── settings.json
+├── src/ # Código de inferência
+│ ├── predict.py
+│ ├── load_artifacts.py
+│ ├── schemas.py
+| └── __init__.py
+│
+├── tests/ # Testes simples de inferência
+│ └── tests_predict.py
+│
+├── main.py # API com FastAPI
+├── run_local.py # Execução local
+├── requirements.txt
+├── Dockerfile
+├── desc_var.md
+├── settings.json
+└── README.md
 
-Tecnologias Utilizadas:
-Python
-Pandas
-NumPy
-Scikit-learn
-Joblib
-FastAPI
-Docker
-AWS
-Modelagem
 
-O modelo foi desenvolvido utilizando:
+## Tecnologias utilizadas
 
-Regressão Logística
-Transformação de variáveis com WOE (Weight of Evidence)
-Codificação de variáveis categóricas via One-Hot Encoding
-Seleção e organização das variáveis de entrada
+- Python
+- Pandas e NumPy
+- Scikit-learn
+- OptBinning
+- Joblib
+- FastAPI
+- Docker
+- AWS (ECR)
+- AWS (App Runner)
 
-Todos os componentes necessários para inferência foram persistidos separadamente, garantindo consistência entre ambiente de desenvolvimento e execução.
+## Modelagem
 
-Pipeline de Inferência
+O modelo foi construído com regressão logística, utilizando:
 
-O processo de predição segue as seguintes etapas:
+- Transformação de variáveis com WOE (Weight of Evidence)
+- Codificação de variáveis categóricas com One-Hot Encoding
+- Seleção e organização das variáveis de entrada
 
-Recebimento dos dados de entrada
-Aplicação das transformações:
-Encoding das variáveis categóricas
-Aplicação dos bins de WOE
-Seleção e ordenação das variáveis
-Aplicação do modelo de regressão logística
-Retorno da probabilidade de inadimplência
-Servir o Modelo via API
+A ideia foi manter um fluxo simples, mas próximo do que seria utilizado em produção.
 
-O modelo foi estruturado para ser exposto como um serviço de inferência utilizando FastAPI.
+## Artefatos
 
-A API recebe dados em formato JSON, aplica o pipeline de transformação e retorna a probabilidade estimada pelo modelo. Essa abordagem permite desacoplamento entre modelagem e consumo, facilitando integração com sistemas externos.
+Os principais componentes do pipeline foram persistidos separadamente:
 
-Containerização com Docker
+- Modelo treinado
+- Encoder das variáveis categóricas
+- Transformações de WOE
+- Lista de colunas esperadas
+- Metadados
 
-A aplicação pode ser empacotada em uma imagem Docker, garantindo:
+Isso permite carregar todos os elementos necessários diretamente na etapa de inferência, sem dependência do ambiente de treino.
 
-Reprodutibilidade do ambiente
-Portabilidade entre diferentes sistemas
-Facilidade de deploy
+## API
 
-O container inclui:
+A inferência é feita via API utilizando FastAPI. O serviço recebe os dados de entrada em formato JSON, aplica as transformações necessárias e retorna a probabilidade de default.
 
-Código da API
-Artefatos do modelo
-Dependências definidas em requirements.txt
-Deploy em Ambiente AWS
+## Deploy
 
-A arquitetura do projeto permite implantação em ambiente cloud, utilizando serviços como:
+O projeto foi containerizado com Docker e preparado para execução no AWS App Runner.
 
-Amazon ECR para armazenamento da imagem Docker
-Amazon ECS ou SageMaker para execução do container
-Integração com serviços de rede para exposição do endpoint
+## Observações
 
-Essa abordagem permite escalar o serviço de inferência conforme a demanda e manter separação entre desenvolvimento e produção.
+A estrutura foi pensada para separar responsabilidades e facilitar evolução futura, principalmente em cenários com deploy contínuo ou monitoramento do modelo.
 
-Como Executar
-Criar ambiente virtual:
-python -m venv .venv
-source .venv/bin/activate
-Instalar dependências:
-pip install -r requirements.txt
-Executar os testes:
-python tests.py
+## Variáveis de Entrada
 
-Observações:
+A API espera as seguintes variáveis de entrada:
 
-O projeto foi estruturado com foco em boas práticas de organização de código, separação de responsabilidades e preparação para deploy em ambiente produtivo, permitindo fácil manutenção e evolução.
+### Variáveis categóricas
+
+#### Tipo de posse do imóvel (`tipo_posse_imovel`)
+
+Valores possíveis:
+
+- `aluguel`
+- `imovel_proprio`
+- `imovel_financiado`
+- `imovel_outros`
+
+#### Propósito do empréstimo (`proposito_emprestimo`)
+
+Valores possíveis:
+
+- `fins_consolidacao_debito`
+- `fins_educacao`
+- `fins_medicos`
+- `fins_pessoais`
+- `fins_negocios`
+- `fins_reformas`
+
+#### Classificação do empréstimo (`classificacao_emprestimo`)
+
+Faixas de risco representadas por letras:
+
+- `A` (menor risco)
+- `B`
+- `C`
+- `D`
+- `E`
+- `F`
+- `G` (maior risco)
+
+### Variáveis numéricas
+
+- `renda_anual_individuo`
+- `valor_emprestimo`
+- `percentual_renda_emprestimo`
+
+## Exemplo de requisição
+
+```json
+{
+  "renda_anual_individuo": 50000,
+  "valor_emprestimo": 12000,
+  "percentual_renda_emprestimo": 0.24,
+  "tipo_posse_imovel": "imovel_proprio",
+  "proposito_emprestimo": "fins_pessoais",
+  "classificacao_emprestimo": "G"
+}
+
+Saida esperada:
+```json
+{
+  "probabilidade_inadimplencia": 0.7046636022100472
+}
