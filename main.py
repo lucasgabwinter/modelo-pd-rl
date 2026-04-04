@@ -12,8 +12,12 @@ app = FastAPI(
 
 
 @app.get("/")
-def health_check():
+def home():
     return {"status": "ok"}
+
+@app.get("/health")
+def health():
+    return {"status": "healthy"}
 
 
 @app.post("/predict", response_model=PredicaoOutput)
