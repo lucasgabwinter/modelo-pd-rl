@@ -1,16 +1,21 @@
 # Modelo de Probabilidade de Default (PD) com Regressão Logística
 
-Este projeto implementa um modelo de probabilidade de inadimplência (PD) utilizando regressão logística. A proposta foi estruturar um pipeline simples, mas bem organizado, separando claramente as etapas de treinamento e inferência, com foco em reprodutibilidade e preparação para deploy.
+Este projeto implementa um modelo de probabilidade de inadimplência (PD) utilizando regressão logística, estruturado como um pipeline completo de crédito — desde o tratamento das variáveis até a disponibilização do modelo em produção.
+
+O fluxo inclui etapas típicas de modelagem de risco, como **binning com WOE**, **codificação de variáveis categóricas via One-Hot Encoding (OHE)** e organização dos artefatos para inferência desacoplada do ambiente de treino.
+
+Além da modelagem, o projeto foi desenvolvido com foco em aplicação prática, expondo o modelo via **API com FastAPI** e preparado para deploy em ambiente cloud utilizando **Docker e AWS App Runner**.
 
 ## Objetivo
 
 Desenvolver um modelo de crédito com uma estrutura que permita:
 
-- Treinar o modelo de forma consistente
-- Separar corretamente os artefatos gerados
-- Reproduzir as previsões fora do ambiente de treino
-- Disponibilizar o modelo via API
-- Preparar o projeto para execução em ambiente cloud
+- Treinar o modelo de forma consistente e reproduzível
+- Aplicar transformações estruturadas (WOE + OHE) no pipeline de inferência
+- Separar corretamente os artefatos do modelo (encoder, bins, metadados)
+- Reproduzir previsões fora do ambiente de desenvolvimento
+- Disponibilizar o modelo via API (FastAPI)
+- Preparar o projeto para execução em ambiente cloud (AWS)
 
 ## Estrutura do projeto
 ```
