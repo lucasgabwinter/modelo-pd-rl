@@ -13,6 +13,7 @@ Desenvolver um modelo de crédito com uma estrutura que permita:
 - Preparar o projeto para execução em ambiente cloud
 
 ## Estrutura do projeto
+```
 modelo-pd-rl/
 │
 ├── artifacts/ # Artefatos do modelo
@@ -44,7 +45,7 @@ modelo-pd-rl/
 ├── desc_var.md
 ├── settings.json
 └── README.md
-
+```
 
 ## Tecnologias utilizadas
 
@@ -149,7 +150,7 @@ Faixas de risco representadas por letras:
 }
 
 Saida esperada:
-```json
 {
   "probabilidade_inadimplencia": 0.7046636022100472
 }
+```
